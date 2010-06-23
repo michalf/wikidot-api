@@ -24,11 +24,10 @@ Before you start using the wikidot-api library, you need an API key. Please cons
     require "wikidot_api"
     
     api_key = "YOUR_API_KEY_HERE"
-    user_name = "YOUR_USER_NAME_HERE"
     
-    wikidot = WikidotAPI::Client.new 'wikidot-api', api_key
+    wikidot = WikidotAPI::Client.new "wikidot-api", api_key
     
-
+First argument to the #new method is name of the application using the API. E.g. if you are creating an application called "Best Wikidot API Client", please use its name in the constructor.
 
 ### Calling remote methods
 
@@ -41,16 +40,16 @@ convenient solution to query the remote service.
 
 The example below uses the remote method <tt>user.sites</tt> that takes one parameter (<tt>user</tt>) and returns a list of sites that this user owns. The method can be called directly on the <tt>wikidot</tt> object.
 
-    sites = wikidot.user.sites 'user' => user_name
+    sites = wikidot.user.sites "user" => "YOUR_USER_NAME_HERE"
     sites.each do |site|
       puts "#{site["title"]}, http://#{site["name"]}.wikidot.com" 
     end
     
 #### Example: Fetching a page
 
-    page = wikidot.page.get 'site' => site, 'page' => page
-    puts page['title']
-    puts page['source']
+    page = wikidot.page.get "site" => "YOUR_SITE_NAME_HERE", "page" => "YOUR_PAGE_NAME_HERE"
+    puts page["title"]
+    puts page["source"]
 
 #### Example: Creating a new page
 
