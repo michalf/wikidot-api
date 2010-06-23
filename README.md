@@ -36,6 +36,29 @@ The <tt>WikidotAPI::Client</tt> implements <tt>method_missing</tt> method so tha
 is checked agains remote service. This way the library does not need to be updated if RPC methods change, but still provides
 convenient solution to query the remote service.
 
+#### Getting list of methods and method descriptions
+
+Using the RPC methods you can get list of implemented methods and their descriptions.
+
+    puts wikidot.system.listMethods
+
+at this moment this prints:
+    system.listMethods
+    system.methodHelp
+    system.methodSignature
+    system.multicall
+    site.pages
+    site.categories
+    page.get
+    page.files
+    page.save
+    user.valid
+    user.sites
+
+To print help about any particular method, try this:
+    
+    puts wikidot.system.methodHelp 'page.save'
+
 #### Example: Listing sites
 
 The example below uses the remote method <tt>user.sites</tt> that takes one parameter (<tt>user</tt>) and returns a list of sites that this user owns. The method can be called directly on the <tt>wikidot</tt> object.
