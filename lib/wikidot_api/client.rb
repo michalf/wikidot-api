@@ -5,15 +5,16 @@ module WikidotAPI
   class Client
     def initialize app, key, opts={}
       @app, @key = app, key
-      @domain = opts[:domain] || "www.wikidot.com"
-      @proto = opts[:proto] || "https" 
+      @host = opts[:host] || "www.wikidot.com"
+      @proto = opts[:proto] || "https"
+      @port = opts[:port] || false
     end
 
     def call method, *args
       try_count = 0
       begin
         server.call method, *args
-      rescue EOFError => e
+      rescue IOError => e
         @server = nil
         try_count += 1
         raise if try_count == 3
@@ -34,7 +35,7 @@ module WikidotAPI
     end
 
     def endpoint_uri
-      "#{@proto}://#{@app}:#{@key}@#{@domain}/xml-rpc-api.php"
+      "#{@proto}://#{@app}:#{@key}@#{@host}#{@port ? ':' + @port.to_s : ''}/xml-rpc-api.php"
     end
 
     private :server, :endpoint_uri
