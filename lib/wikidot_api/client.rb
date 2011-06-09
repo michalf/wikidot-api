@@ -36,7 +36,7 @@ module WikidotAPI
     end
     
     def query_options_string
-      "?" + @query_options.map{|o| p "#{CGI.escape(o[0].to_s)}=#{CGI.escape(o[1].to_s)}"}.join("&") if @query_options
+      "?" + @query_options.map{|o| "#{CGI.escape(o[0].to_s)}=#{CGI.escape(o[1].to_s)}"}.join("&") if @query_options
     end
 
     def endpoint_uri
