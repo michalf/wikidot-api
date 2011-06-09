@@ -1,5 +1,6 @@
 require "rubygems"
 require "xmlrpc/client"
+require "cgi"
 
 # Enable NIL extension to handle <nil/> values
 XMLRPC::Config::ENABLE_NIL_CREATE = true

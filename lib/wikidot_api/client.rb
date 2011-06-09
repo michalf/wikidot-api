@@ -8,6 +8,7 @@ module WikidotAPI
       @host = opts[:host] || "www.wikidot.com"
       @proto = opts[:proto] || "https"
       @port = opts[:port] || false
+      @query_options = opts[:query_options] || false
     end
 
     def call method, *args
@@ -33,11 +34,15 @@ module WikidotAPI
     def server
       @server ||= XMLRPC::Client.new2 endpoint_uri
     end
-
-    def endpoint_uri
-      "#{@proto}://#{@app}:#{@key}@#{@host}#{@port ? ':' + @port.to_s : ''}/xml-rpc-api.php"
+    
+    def query_options_string
+      "?" + @query_options.map{|o| p "#{CGI.escape(o[0].to_s)}=#{CGI.escape(o[1].to_s)}"}.join("&") if @query_options
     end
 
-    private :server, :endpoint_uri
+    def endpoint_uri
+      "#{@proto}://#{@app}:#{@key}@#{@host}#{@port ? ':' + @port.to_s : ''}/xml-rpc-api.php#{query_options_string}"
+    end
+
+    private :server, :endpoint_uri, :query_options_string
   end
 end
