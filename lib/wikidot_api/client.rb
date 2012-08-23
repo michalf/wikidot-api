@@ -14,7 +14,7 @@ module WikidotAPI
     def call method, *args
       try_count = 0
       begin
-        server.call method, *args
+        server.call_async method, *args
       rescue IOError => e
         @server = nil
         try_count += 1
