@@ -32,7 +32,11 @@ module WikidotAPI
     end
 
     def server
-      @server ||= XMLRPC::Client.new2 endpoint_uri
+      @server ||= begin
+        client = XMLRPC::Client.new2 endpoint_uri
+        client.http_header_extra = {'accept-encoding' => 'identity'} if RUBY_VERSION == "2.0.0"
+        client
+      end
     end
     
     def query_options_string
